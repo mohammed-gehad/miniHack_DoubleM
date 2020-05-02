@@ -11,6 +11,8 @@ const _ = require("lodash");
 //registering a new user
 route.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
+  const isThereUser = await UserModel.findOne({ email: email.toLowerCase() });
+  if (isThereUser) res.send(`already have an account with ${email}`);
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   const user = new UserModel({ username, email, password: hashedPassword });
@@ -34,7 +36,7 @@ route.post("/login", async (req, res) => {
   }
 });
 
-//return users info
+//return users
 route.get("/me", auth, async (req, res) => {
   const user = await UserModel.findById({ _id: req.user._id });
   res.header("token", user.generateToken()).send(user);

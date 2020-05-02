@@ -1,12 +1,18 @@
+require("express-async-errors");
 const express = require("express");
 const app = express();
 app.use(express.json());
 const mongoose = require("mongoose");
+require("./models/UserModel");
+const userRoute = require("./router/UserRoute");
+const config = require("config");
+
 // const helmet = require("helmet");
 // const compression = require("compression");
-
 //database connection
-const mongoURI = `mongodb+srv://mohammed:${process.env.MongoPassword}@cluster0-mpwkt.mongodb.net/test?retryWrites=true&w=majority`;
+const secret = config.get("secret") || process.env.secret;
+const mongoURI = `mongodb+srv://mohammedgehad:${secret}@cluster0-8vjxg.mongodb.net/test?retryWrites=true&w=majority
+`;
 mongoose
   .connect(mongoURI, {
     useNewUrlParser: true,
