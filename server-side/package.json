@@ -1,0 +1,17 @@
+{
+  "name": "recommendation",
+  "version": "1.0.0",
+  "description": "server side for a hackaton project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.9.11",
+    "validator": "^13.0.0"
+  }
+}
