@@ -19,6 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.11",
+    "ngrok": "^3.2.7",
     "validator": "^13.0.0"
   }
 }

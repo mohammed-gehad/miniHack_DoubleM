@@ -64,7 +64,7 @@ route.post("/watchlist/:id", auth, async (req, res) => {
 });
 
 // removing users watchlist
-route.put("/watchlist/:id", auth, async (req, res) => {
+route.delete("/watchlist/:id", auth, async (req, res) => {
   const user = await UserModel.findOne({ _id: req.user._id });
   user.watchList = user.watchList.filter((item) => item != req.params.id);
   await user.save();

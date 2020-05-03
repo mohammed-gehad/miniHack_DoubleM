@@ -8,9 +8,8 @@ require("./models/MoviesModel");
 const userRoute = require("./router/UserRoute");
 const MoviesRoute = require("./router/MoviesRoute");
 const config = require("config");
-
-// const helmet = require("helmet");
-// const compression = require("compression");
+const helmet = require("helmet");
+const compression = require("compression");
 //database connection
 const secret = config.get("secret") || process.env.secret;
 const mongoURI = `mongodb+srv://mohammedgehad:${secret}@cluster0-8vjxg.mongodb.net/test?retryWrites=true&w=majority
@@ -26,8 +25,8 @@ mongoose
   .catch((e) => console.log(e));
 //
 
-// app.use(helmet());
-// app.use(compression());
+app.use(helmet());
+app.use(compression());
 app.use("/user", userRoute);
 app.use("/movies", MoviesRoute);
 
@@ -39,3 +38,12 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`listening at ${port}`);
 });
+
+if (process.env.NODE_ENV !== "production") {
+  const ngrok = require("ngrok");
+  const ngrokConnect = async () => {
+    const url = await ngrok.connect(port);
+    console.log(url);
+  };
+  ngrokConnect();
+}
