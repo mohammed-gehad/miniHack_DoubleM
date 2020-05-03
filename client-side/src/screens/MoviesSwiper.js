@@ -12,25 +12,15 @@ import BackGround from "../components/BackGround";
 import style from "../../assets/style";
 import { useFonts } from "@use-expo/font";
 import { Context as MovieContext } from "../context/MoviesContext";
+import { Context as AuthContext } from "../context/AuthContext";
 import CardStack, { Card } from "react-native-card-stack-swiper";
 
 const MoviesSwiper = () => {
   const { state, getMovies } = useContext(MovieContext);
+  const { addToWatchList } = useContext(AuthContext);
   React.useEffect(() => {
     getMovies();
   }, []);
-  const data = [
-    {
-      __v: 0,
-      _id: "5eae074631cea34678224e48",
-      genres: ["Horror"],
-      name: "The Hole in the Ground",
-      overview:
-        "Sarah flees to the Irish countryside. It's implied that she is fleeing an abusive husband, with",
-      poster:
-        "https://winteriscoming.net/files/2019/02/mgot_s8_character_art_jon_snow.jpg",
-    },
-  ];
 
   let [fontsLoaded] = useFonts({
     CircularStdBlack: require("../../assets/Fonts/CircularStd-Black.ttf"),
@@ -51,7 +41,7 @@ const MoviesSwiper = () => {
             return (
               <Card
                 onSwipedRight={() => {
-                  console.log("right");
+                  addToWatchList(item._id);
                 }}
                 style={[cardStyle.card, { backgroundColor: "#FAFBFD" }]}
                 key={1}

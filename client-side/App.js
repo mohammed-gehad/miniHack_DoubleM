@@ -9,10 +9,12 @@ import {
 } from "./src/context/AuthContext";
 import { Provider as MoviesProvider } from "./src/context/MoviesContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
 //screens
 import MoviesSwiper from "./src/screens/MoviesSwiper";
 import SigninScreen from "./src/screens/SigninScreen";
+import WatchListScreen from "./src/screens/WatchListScreen";
 
 const stack = createStackNavigator();
 const tab = createBottomTabNavigator();
@@ -72,21 +74,17 @@ function App() {
           <tab.Navigator
             screenOptions={({ route }) => ({
               tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
-
-                if (route.name === "noteStack") {
-                  return <Ionicons name={"ios-list"} size={30} color={color} />;
-                } else if (route.name === "createNote") {
+                if (route.name === "MovieStack") {
                   return (
-                    <Ionicons
-                      name={"md-add-circle-outline"}
-                      size={40}
+                    <MaterialCommunityIcons
+                      name={"gesture-swipe"}
+                      size={30}
                       color={color}
                     />
                   );
-                } else if (route.name === "account") {
+                } else if (route.name === "WatchListScreen") {
                   return (
-                    <Ionicons name={"ios-options"} size={30} color={color} />
+                    <MaterialIcons name={"favorite"} size={30} color={color} />
                   );
                 }
 
@@ -100,6 +98,7 @@ function App() {
             }}
           >
             <tab.Screen name="MovieStack" component={MovieStack} />
+            <tab.Screen name="WatchListScreen" component={WatchListScreen} />
           </tab.Navigator>
         </>
       )}

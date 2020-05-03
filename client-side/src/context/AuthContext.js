@@ -12,6 +12,8 @@ export const Provider = ({ children }) => {
     switch (action.type) {
       case "login":
         return action.payload;
+      case "addToWatchList":
+        return { ...state, watchList: [action.payload, ...state.watchList] };
       case "getToken":
         return { ...state, token: action.payload };
       case "logout":
@@ -84,7 +86,7 @@ export const Provider = ({ children }) => {
 
   const addToWatchList = async (id) => {
     try {
-      await MoviesApi.post(`/watchlist/${id}`).then(() => {
+      await MoviesApi.post(`user/watchlist/${id}`).then(() => {
         dispatch({ type: "addToWatchList", payload: id });
       });
     } catch (e) {
@@ -93,7 +95,7 @@ export const Provider = ({ children }) => {
   };
   const deleteFromWatchList = async () => {
     try {
-      await MoviesApi.delete(`/watchlist/${id}`).then(() => {
+      await MoviesApi.delete(`user/watchlist/${id}`).then(() => {
         dispatch({ type: "deleteFromWatchList", payload: id });
       });
     } catch (e) {
