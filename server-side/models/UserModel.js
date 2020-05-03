@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   watchList: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "watchList",
+      ref: "Movies",
     },
   ],
 });

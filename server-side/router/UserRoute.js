@@ -36,19 +36,38 @@ route.post("/login", async (req, res) => {
   }
 });
 
-//return users
+//return users info
 route.get("/me", auth, async (req, res) => {
   const user = await UserModel.findById({ _id: req.user._id });
   res.header("token", user.generateToken()).send(user);
 });
 
-// getting users notes
-route.get("/notes", auth, async (req, res) => {
-  const response = await UserModel.findOne(
+// getting users watchlist
+route.get("/watchlist", auth, async (req, res) => {
+  const { watchList } = await UserModel.findOne(
     { _id: req.user._id },
-    "note -_id"
-  ).populate({ path: "note", options: { sort: { date: -1 } } });
-  //const sorted = _.orderBy(response.note,'date','desc')
-  res.send(response.note);
+    "watchList -_id"
+  ).populate("watchList");
+  res.send(watchList);
+});
+
+// adding a movie to users watchlist
+route.post("/watchlist/:id", auth, async (req, res) => {
+  const user = await UserModel.findOne({ _id: req.user._id });
+  const isAlreadyAdded = user.watchList.filter((id) => id == req.params.id);
+  if (isAlreadyAdded) res.send("movie is already added to watchlist");
+  else {
+    user.watchList.unshift(req.params.id);
+    const result = await user.save();
+    res.send(user.watchList);
+  }
+});
+
+// removing users watchlist
+route.put("/watchlist/:id", auth, async (req, res) => {
+  const user = await UserModel.findOne({ _id: req.user._id });
+  user.watchList = user.watchList.filter((item) => item != req.params.id);
+  await user.save();
+  res.send(user.watchList);
 });
 module.exports = route;

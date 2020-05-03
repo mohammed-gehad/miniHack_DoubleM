@@ -4,7 +4,9 @@ const app = express();
 app.use(express.json());
 const mongoose = require("mongoose");
 require("./models/UserModel");
+require("./models/MoviesModel");
 const userRoute = require("./router/UserRoute");
+const MoviesRoute = require("./router/MoviesRoute");
 const config = require("config");
 
 // const helmet = require("helmet");
@@ -27,6 +29,7 @@ mongoose
 // app.use(helmet());
 // app.use(compression());
 app.use("/user", userRoute);
+app.use("/movies", MoviesRoute);
 
 app.get("/", (req, res) => {
   res.send("hello world");
